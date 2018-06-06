@@ -2,8 +2,8 @@
 Maintenance Announcer is a lightweight Bukkit Minecraft server plugin that makes it easy to tell everyone on your server that Mainteance to the server is happening.
 
 ## Features
-- Lightweight✅
-- Easy to Use✅
+- Lightweight
+- Easy to Use
 
 ## Requirements
 
@@ -31,8 +31,6 @@ Telling everyone that maintenance to the server has ended is easy. Simply:
 ```
 
 ### How to broadcast to only admins
-You can also tell only admins that server has started. (The player has to be an OP.)
-
 
 Tell admins that maintenance to the server has started:
 
