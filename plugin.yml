@@ -1,0 +1,67 @@
+name: MaintenanceAnnouncer
+author: Gamercraft Bros
+version: 3.4
+website: https://gamercraftbros.wixsite.com/gamercraftbros/
+prefix: Maintenance Announcer
+main: gamercraftbros.maintenanceannouncer.Main
+database: false
+
+commands:
+  maintenance:
+    description: Check if the server is undergoing maintenance.
+    permission: gamercraftbros.maintenanceannouncer.see
+  maintenance start:
+    description: Broadcast to players that maintenance has started.
+    permission: gamercraftbros.maintenanceannouncer.start
+    aliases: [begin]
+  maintenance end:
+    description: Broadcast to players that maintenance has ended.
+    permission: gamercraftbros.maintenanceannouncer.end
+    aliases: [stop]
+  maintenance admin:
+    description: Check if the server is undergoing maintenance (admin only).
+    permission: gamercraftbros.maintenanceannouncer.adminsee
+  maintenance admin start:
+    description: Broadcast to only admins that maintenance has started.
+    permission: gamercraftbros.maintenanceannouncer.adminstart
+    aliases: [admin begin]
+  maintenance admin end:
+    description: Broadcast to only admins that maintenance has ended.
+    permission: gamercraftbros.maintenanceannouncer.adminend
+    aliases: [admin stop]
+  maintenance reload:
+    description: Reloads Maintenance Announcer.
+    permission: gamercraftbros.maintenanceannouncer.reload
+    
+permissions:
+  gamercraftbros.maintenanceannouncer.*:
+    description: Gives access to all Maintenance Announcer commands.
+    children:
+     gamercraftbros.maintenanceannouncer.see: true
+     gamercraftbros.maintenanceannouncer.start: true
+     gamercraftbros.maintenanceannouncer.end: true
+     gamercraftbros.maintenanceannouncer.adminsee: true
+     gamercraftbros.maintenanceannouncer.adminstart: true
+     gamercraftbros.maintenanceannouncer.adminend: true
+     gamercraftbros.maintenanceannouncer.reload: true
+  gamercraftbros.maintenanceannouncer.see:
+     description: Allows you to see there is server maintenance going on.
+     default: op
+  gamercraftbros.maintenanceannouncer.start:
+     description: Allows broadcasting that maintenance has started.
+     default: op
+  gamercraftbros.maintenanceannouncer.end:
+     description: Allows broadcasting that maintenance has ended.
+     default: op
+  gamercraftbros.maintenanceannouncer.adminsee:
+     description: Allows you to see there is admin only server maintenance going on.
+     default: op
+  gamercraftbros.maintenanceannouncer.adminstart:
+     description: Allows broadcasting that maintenance has started to only admins.
+     default: op
+  gamercraftbros.maintenanceannouncer.adminend:
+     description: Allows broadcasting that maintenance has ended to only admins.
+     default: op
+  gamercraftbros.maintenanceannouncer.reload:
+     description: Reloads the plugin.
+     default: op

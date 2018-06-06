@@ -1,0 +1,26 @@
+# Maintenance Announcer Config File
+# Need help with Maintenance Announcer? Get help here: https://gamercraftbros.wixsite.com/gamercraftbros/forum/maintenance-announcer
+# If the config version doesn't match your Maintenance Announcer version, then you may encounter problems.
+Config version: 4
+PrivateMaintenance: false
+Maintenance: false
+
+# Settings
+# Automatically Check for Updates on Server Startup. (default: true)
+Automatically check for updates: true
+# Allow the Maintenance Announcer plugin to be reloaded. (default: true)
+Allow reloads to Maintenance Announcer: true
+
+
+# ----Message Customization------------------------------------------------------------------
+# Here's where you can customize every message.
+Maintenance has started: '&f Maintenance to the server has started. Please excuse any lag.'
+Maintenance has ended: '&f Maintenance to the server has ended. Thanks for your patience.'
+Arguments list: '&a Args: start, begin, stop, end, admin start, admin begin, admin stop, admin end, reload.'
+Maintenance ongoing message: '&f The server is currently undergoing maintenance. Please excuse any lag.'
+Maintenance not ongoing message: '&f The server is not currently undergoing maintenance.'
+Prefix: '&c[Maintenance Announcer]'
+Admin only prefix: '&c[Maintenance Announcer (ADMIN ONLY)]'
+Sent to all admins message: '&a Sent to ALL admins!'
+
+# Coded with love by Gamercraft Bros in Tennessee.
