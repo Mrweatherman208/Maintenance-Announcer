@@ -1,9 +1,9 @@
 name: MaintenanceAnnouncer
-author: Gamercraft Bros
-version: 3.4
+author: Hayden Watson
+version: 4.0
 website: https://gamercraftbros.wixsite.com/gamercraftbros/
 prefix: Maintenance Announcer
-main: gamercraftbros.maintenanceannouncer.Main
+main: hjw.maintenanceannouncer.Main
 database: false
 
 commands:
