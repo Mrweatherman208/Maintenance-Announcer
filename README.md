@@ -4,6 +4,7 @@ Maintenance Announcer is a lightweight Bukkit Minecraft server plugin that makes
 ## Features
 - Lightweight
 - Easy to Use
+- Works with PermissionsEx
 
 ## Requirements
 
@@ -12,7 +13,7 @@ Maintenance Announcer is a lightweight Bukkit Minecraft server plugin that makes
 
 ## Installation
 
-Go to your "plugins" folder on your Bukkit Minecraft Server, then add the "Mainteance Annuncer 4.x.jar" to the folder.
+Go to your "plugins" folder on your Bukkit Minecraft Server, then add the "Maintenance Announcer 4.x.jar" to the folder.
 
 ## Usage
 
@@ -22,11 +23,13 @@ Telling everyone that maintenance to the server has started is easy. Simply:
 ```java
 /maintenance start
 ```
+[![Maintenance has started.](screenshots/MaintenanceStarted.png)]
 
 Telling everyone that maintenance to the server has ended is easy. Simply:
 ```java
 /maintenance stop
 ```
+[![Maintenance has ended.](screenshots/MaintenanceEnded.png)]
 
 ### Broadcast to Only Admins
 
@@ -46,6 +49,7 @@ To reload Maintenance Announcer:
 ```java
 /maintenance reload
 ```
+[![Maintenance Announcer was reloaded.](screenshots/MaintenanceReload.png)]
 
 ## License
 
