@@ -52,12 +52,12 @@ To reload Maintenance Announcer:
 
 ### Supported Servers
 
-## Tested to work on:
+#### Tested to work on:
 - Spigot
 - Paper
 - Glowstone
 
-## Not tested, but should be capable:
+#### Not tested, but should be capable:
 - Bukkit
 - CraftBukkit
 - BungeeCord
@@ -65,7 +65,7 @@ To reload Maintenance Announcer:
 - HOSE
 - Waterfall/Travertine
 
-## Not compatible with:
+#### Not compatible with:
 - Vanilla
 - Sponge/SpongeForge
 - Torch
