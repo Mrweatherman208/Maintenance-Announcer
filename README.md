@@ -13,7 +13,7 @@ Maintenance Announcer is a lightweight Bukkit Minecraft server plugin that makes
 
 ## Installation
 
-Go to your "plugins" folder on your Bukkit Minecraft Server, then add the "Maintenance Announcer 4.x.jar" to the folder.
+Go to your "plugins" folder on your Bukkit Minecraft Server, then add the "Maintenance Announcer 5.x.jar" to the folder.
 
 ## Usage
 
@@ -23,7 +23,7 @@ Telling everyone that maintenance to the server has started is easy. Simply:
 ```java
 /maintenance start
 ```
-[![Maintenance has started.](screenshots/MaintenanceStarted.png)]
+![Maintenance has started.](screenshots/MaintenanceStarted.png)
 
 Telling everyone that maintenance to the server has ended is easy. Simply:
 ```java
