@@ -50,6 +50,26 @@ To reload Maintenance Announcer:
 ```
 ![Maintenance Announcer was reloaded.](screenshots/MaintenanceReload.png)
 
+### Supported Servers
+
+## Tested to work on:
+- Spigot
+- Paper
+- Glowstone
+
+## Not tested, but should be capable:
+- Bukkit
+- CraftBukkit
+- BungeeCord
+- KCauldron
+- HOSE
+- Waterfall/Travertine
+
+## Not compatible with:
+- Vanilla
+- Sponge/SpongeForge
+- Torch
+
 ## License
 
 Maintenance Announcer is available under the MIT license. See the LICENSE file for more info.
