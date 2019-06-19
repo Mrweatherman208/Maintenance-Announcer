@@ -8,7 +8,9 @@ public class Listener implements org.bukkit.event.Listener {
 	
 	private Main plugin;
 	
-	public Listener (Main plugin) { this.plugin = plugin; }
+	public Listener (Main plugin) { 
+		this.plugin = plugin;
+	}
 	
 	@EventHandler
 	private void onPlayerJoin(PlayerJoinEvent event) { 
