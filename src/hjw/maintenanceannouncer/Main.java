@@ -46,6 +46,7 @@ public class Main extends JavaPlugin {
 	 			    		sender.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("Prefix") + getConfig().getString("Maintenance not ongoing message")));
 				   	 }
 				}
+				return true;
 				case 1:
 				if (args[0].equalsIgnoreCase("start") || (args[0].equalsIgnoreCase("begin"))) {
 					if(sender.hasPermission("hjw.maintenanceannouncer.start")) {

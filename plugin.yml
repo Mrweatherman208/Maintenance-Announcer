@@ -1,6 +1,6 @@
 name: MaintenanceAnnouncer
 author: Hayden Watson
-version: 5.0
+version: 5.0.1
 website: https://sites.google.com/view/haydenwatson/maintenance-announcer
 prefix: Maintenance Announcer
 main: hjw.maintenanceannouncer.Main
