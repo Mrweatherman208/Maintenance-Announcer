@@ -32,6 +32,7 @@ public class Main extends JavaPlugin {
 		// Statements for the maintenance commands.
 		if (cmd.getName().equalsIgnoreCase("maintenance")) {
 			reloadConfig();
+			// Switch for the arugment length.
 			switch (args.length) {
 				case 0:
 				if (getConfig().getString("adminOnlyMaintenance") == "true") {
@@ -47,7 +48,8 @@ public class Main extends JavaPlugin {
 				   	 }
 				}
 				return true;
-				case 1:
+				case 1: // User just used one arguement in their command.
+				// Check for "start" or "begin" being the first argument.
 				if (args[0].equalsIgnoreCase("start") || (args[0].equalsIgnoreCase("begin"))) {
 					if(sender.hasPermission("hjw.maintenanceannouncer.start")) {
 						getConfig().set("Maintenance", true);
@@ -58,6 +60,7 @@ public class Main extends JavaPlugin {
 					}
 					return true;
 				}
+				// Check for "stop" or "end" being the first argument.
 				if (args[0].equalsIgnoreCase("stop") || (args[0].equalsIgnoreCase("end"))) {
 					if(sender.hasPermission("hjw.maintenanceannouncer.end")) {
 						getConfig().set("Maintenance", false);
@@ -68,6 +71,7 @@ public class Main extends JavaPlugin {
 					}
 					return true;
 				}
+				// Check for "admin" being the first argument.
 					if (args[0].equalsIgnoreCase("admin")) {
 						if(sender.hasPermission("hjw.maintenanceannouncer.adminsee")) {
 							if(sender.hasPermission("hjw.maintenanceannouncer.adminsee")) {
@@ -94,7 +98,8 @@ public class Main extends JavaPlugin {
 					}
 						// Invalid Argument
 						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("Admin only prefix") + getConfig().getString("Invalid argument message")));
-				case 2:
+				case 2: // User used 2 arguements in their command.
+				// Check for "admin" being the first argument.
 				if (args[0].equalsIgnoreCase("admin")) {
 					if (args[1].equalsIgnoreCase("start") || (args[1].equalsIgnoreCase("begin"))) {
 						if(sender.hasPermission("hjw.maintenanceannouncer.adminstart")) {
@@ -106,6 +111,7 @@ public class Main extends JavaPlugin {
 						}
 						return true;
 					}
+					// Check for "stop" or "end" being the second argument.
 					if (args[1].equalsIgnoreCase("stop") || (args[1].equalsIgnoreCase("end"))) {
 						if(sender.hasPermission("hjw.maintenanceannouncer.adminend")) {
 							adminBroadcastStop();
@@ -126,6 +132,7 @@ public class Main extends JavaPlugin {
 		return false;
 }
 	
+	// Maintenance was started.
 	private void startEvent() {
 		if (started == false) {
 		PluginManager pm = getServer().getPluginManager();
