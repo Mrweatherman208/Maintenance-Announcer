@@ -14,18 +14,21 @@ public class Main extends JavaPlugin {
 	    	
 	private boolean started = false; // Var for if the maintenance to the server is active.
 	
+	// Plugin has been enabled.
 	@Override
 	public void onEnable() {
    	 getLogger().info("Maintenance Announcer is enabled.");
 		createConfig();
+		// Check if the "Maintenance" string in the config says "true".
    	 if (getConfig().getString("Maintenance") == "true") {
 			startEvent();
    	 }
 	}
 	
+	// Plugin has been disabled.
 	@Override
 	public void onDisable() { 
-		getLogger().info("Maintenance Announcer is disabled.");
+		getLogger().info("Maintenance Announcer is disabled."); // Log that Maintenance Announcer has been disabled.
 	}
 	
 	public boolean onCommand (CommandSender sender, Command cmd, String label, String[] args) {
