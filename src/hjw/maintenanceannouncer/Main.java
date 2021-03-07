@@ -12,7 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
 	    	
-	private boolean started = false;
+	private boolean started = false; // Var for if the maintenance to the server is active.
 	
 	@Override
 	public void onEnable() {
@@ -134,6 +134,7 @@ public class Main extends JavaPlugin {
 	
 	// Maintenance was started.
 	private void startEvent() {
+		// Check if maintenance has already been started.
 		if (started == false) {
 		PluginManager pm = getServer().getPluginManager();
 		Listener listener = new Listener(this);
@@ -160,15 +161,23 @@ player.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getSt
 
 	private void createConfig() {
 	    try {
-	        if (!getDataFolder().exists()) {getDataFolder().mkdirs();}
-	        File file = new File(getDataFolder(), "config.yml");
-	        if (!file.exists()) {
-			   	getLogger().info("Config file not found! Creating one!");
-	            saveDefaultConfig();
+			// Check if the "MaintenanceAnnouncer" directory exists.
+	        if (getDataFolder().exists() == false) { 
+				getDataFolder().mkdirs(); // Make directory using the built-in bukkit function.
+			}
+
+	        File file = new File(getDataFolder(), "config.yml"); // Introduce the new file, spcify the directory and file name.
+
+			// Check if the config file actually exists.
+	        if (file.exists() == false) {
+			   	getLogger().info("Config file not found! Creating one!"); // Log that a config file is being made.
+	            saveDefaultConfig(); // Use the save default bukkit function.
 	        } else {
 	        	getLogger().info("Config file found! Loaded!");
 	        }
-	    } catch (Exception e) {e.printStackTrace(); }
+	    } catch (Exception e) {
+			e.printStackTrace();
+		 }
 	}
 	
 }
