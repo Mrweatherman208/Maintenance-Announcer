@@ -13,16 +13,21 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Main extends JavaPlugin {
 
 	private boolean started = false; // Var for if the maintenance to the server is active.
+	private String prefix = "[Maintenance Announcer]";
 
 	// Plugin has been enabled.
 	@Override
 	public void onEnable() {
 		getLogger().info("Maintenance Announcer is enabled.");
 		createConfig();
+		
+		
 		// Check if the "Maintenance" string in the config says "true".
-		if (getConfig().getString("Maintenance") == "true") {
+		if (getConfig().getBoolean("Maintenance") == true) {
 			startEvent();
 		}
+		
+		prefix = getConfig().getString("Prefix");
 	}
 
 	// Plugin has been disabled.
@@ -45,9 +50,9 @@ public class Main extends JavaPlugin {
 				}
 				if(sender.hasPermission("hjw.maintenanceannouncer.see")) {
 					if (getConfig().getString("Maintenance") == "true") {
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("Prefix") + getConfig().getString("Maintenance ongoing message")));
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + getConfig().getString("Maintenance ongoing message")));
 					} else {
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("Prefix") + getConfig().getString("Maintenance not ongoing message")));
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + getConfig().getString("Maintenance not ongoing message")));
 					}
 				}
 				return true;
@@ -58,7 +63,7 @@ public class Main extends JavaPlugin {
 						getConfig().set("Maintenance", true);
 						saveConfig();
 						reloadConfig();
-						Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("Prefix") + getConfig().getString("Maintenance has started")));
+						Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', prefix + getConfig().getString("Maintenance has started")));
 						startEvent();
 					}
 					return true;
@@ -69,7 +74,7 @@ public class Main extends JavaPlugin {
 						getConfig().set("Maintenance", false);
 						saveConfig();
 						reloadConfig();
-						Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("Prefix") + getConfig().getString("Maintenance has ended")));
+						Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&',prefix + getConfig().getString("Maintenance has ended")));
 						HandlerList.unregisterAll(this);
 					}
 					return true;
@@ -90,8 +95,9 @@ public class Main extends JavaPlugin {
 				// Reload Plugin
 				if (args[0].equalsIgnoreCase("reload")) {
 					if(sender.hasPermission("hjw.maintenanceannouncer.reload")) {
-						if (getConfig().getString("Allow reloads to Maintenance Announcer") == "true") {
+						if (getConfig().getBoolean("Allow reloads to Maintenance Announcer") == true) {
 							reloadConfig();
+							prefix = getConfig().getString("Prefix");
 							sender.sendMessage(ChatColor.GREEN + "Maintenance Announcer successfully reloaded!");
 						} else {
 							sender.sendMessage(ChatColor.RED + "Reloading of Maintenance Announcer was disabled in the config file!");
@@ -169,7 +175,7 @@ public class Main extends JavaPlugin {
 				getDataFolder().mkdirs(); // Make directory using the built-in bukkit function.
 			}
 
-			File file = new File(getDataFolder(), "config.yml"); // Introduce the new file, spcify the directory and file name.
+			File file = new File(getDataFolder(), "config.yml"); // Introduce the new file, specify the directory and file name.
 
 			// Check if the config file actually exists.
 			if (file.exists() == false) {
