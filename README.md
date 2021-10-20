@@ -1,5 +1,7 @@
 # Maintenance Announcer
 Maintenance Announcer is a lightweight Bukkit Minecraft server plugin that makes it easy to tell everyone on your server that Mainteance to the server is happening.
+[Click here to read more on Maintenance Announcer](https://www.haydenwatson.co/maintenance-announcer)
+
 
 ## Features
 - Lightweight
