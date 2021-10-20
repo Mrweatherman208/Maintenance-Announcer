@@ -1,4 +1,4 @@
-# Maintenance Announcer 5 Config File
+# Maintenance Announcer 6 Config File
 # Need help with Maintenance Announcer? Get help here: https://haydenwatson.co/maintenance-announcer
 adminOnlyMaintenance: false
 Maintenance: false
@@ -6,6 +6,9 @@ Maintenance: false
 # Settings
 # Allow the Maintenance Announcer plugin to be reloaded. (default: true)
 Allow reloads to Maintenance Announcer: true
+
+# Tell players about server maintenance when they join the server. (default: true) 
+Tell players about server maintenance on join: true
 
 
 # ----Message Customization------------------------------------------------------------------

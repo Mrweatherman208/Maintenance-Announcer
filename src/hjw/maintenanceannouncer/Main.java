@@ -12,7 +12,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
 
-	private boolean started = false; // Var for if the maintenance to the server is active.
+	public boolean started = false; // Var for if the maintenance to the server is active.
+	public boolean adminOnlyStarted = false; // Var for if the admin only maintenance to the server is active.
+	
 	private String prefix = "[Maintenance Announcer]";
 	private String adminOnlyPrefix = "[Maintenance Announcer (ADMIN ONLY)]";
 
@@ -22,9 +24,16 @@ public class Main extends JavaPlugin {
 		getLogger().info("Maintenance Announcer is enabled.");
 		createConfig();
 		
-		
 		// Check if the "Maintenance" boolean in the config says "true".
 		if (getConfig().getBoolean("Maintenance") == true) {
+			started = true;
+		}
+		
+		if (getConfig().getBoolean("adminOnlyMaintenance") == true) {
+			adminOnlyStarted = true;
+		}
+		
+		if (getConfig().getBoolean("Tell players about server maintenance on join") == true) {
 			startEvent();
 		}
 		
@@ -74,22 +83,14 @@ public class Main extends JavaPlugin {
 				// Check for "start" or "begin" being the first argument.
 				if (args[0].equalsIgnoreCase("start") || (args[0].equalsIgnoreCase("begin"))) {
 					if(sender.hasPermission("hjw.maintenanceannouncer.start")) {
-						getConfig().set("Maintenance", true);
-						saveConfig();
-						reloadConfig();
-						Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', prefix + getConfig().getString("Maintenance has started")));
-						startEvent();
+						startMaintenance();
 					}
 					return true;
 				}
 				// Check for "stop" or "end" being the first argument.
 				if (args[0].equalsIgnoreCase("stop") || (args[0].equalsIgnoreCase("end"))) {
 					if(sender.hasPermission("hjw.maintenanceannouncer.end")) {
-						getConfig().set("Maintenance", false);
-						saveConfig();
-						reloadConfig();
-						Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&',prefix + getConfig().getString("Maintenance has ended")));
-						HandlerList.unregisterAll(this);
+						endMaintenance();
 					}
 					return true;
 				}
@@ -99,9 +100,9 @@ public class Main extends JavaPlugin {
 					if(sender.hasPermission("hjw.maintenanceannouncer.adminsee")) {
 						if(sender.hasPermission("hjw.maintenanceannouncer.adminsee")) {
 							if (getConfig().getBoolean("adminOnlyMaintenance") == true) {
-								sender.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("Admin only prefix") + getConfig().getString("Maintenance ongoing message")));
+								sender.sendMessage(ChatColor.translateAlternateColorCodes('&', adminOnlyPrefix + getConfig().getString("Maintenance ongoing message")));
 							} else {
-								sender.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("Admin only prefix") + getConfig().getString("Maintenance not ongoing message")));
+								sender.sendMessage(ChatColor.translateAlternateColorCodes('&', adminOnlyPrefix + getConfig().getString("Maintenance not ongoing message")));
 							}
 						}
 					}
@@ -117,6 +118,9 @@ public class Main extends JavaPlugin {
 							prefix = getConfig().getString("Prefix");
 							adminOnlyPrefix = getConfig().getString("Admin only prefix");
 							
+							HandlerList.unregisterAll(this); // Unregister the event for telling all newly joining players that maintenance was ongoing.
+							startEvent();
+							
 							sender.sendMessage(ChatColor.GREEN + "Maintenance Announcer successfully reloaded!");
 						} else {
 							sender.sendMessage(ChatColor.RED + "Reloading of Maintenance Announcer was disabled in the config file!");
@@ -131,10 +135,7 @@ public class Main extends JavaPlugin {
 				if (args[0].equalsIgnoreCase("admin")) {
 					if (args[1].equalsIgnoreCase("start") || (args[1].equalsIgnoreCase("begin"))) {
 						if(sender.hasPermission("hjw.maintenanceannouncer.adminstart")) {
-							adminBroadcastStart();
-							getConfig().set("adminOnlyMaintenance", true);
-							saveConfig();
-							reloadConfig();
+							startAdminMaintenance();
 							sender.sendMessage(ChatColor.translateAlternateColorCodes('&', adminOnlyPrefix + getConfig().getString("Sent to all admins message")));
 						}
 						return true;
@@ -142,10 +143,7 @@ public class Main extends JavaPlugin {
 					// Check for "stop" or "end" being the second argument.
 					if (args[1].equalsIgnoreCase("stop") || (args[1].equalsIgnoreCase("end"))) {
 						if(sender.hasPermission("hjw.maintenanceannouncer.adminend")) {
-							adminBroadcastStop();
-							getConfig().set("adminOnlyMaintenance", false);
-							saveConfig();
-							reloadConfig();
+							stopAdminMaintenance();
 							sender.sendMessage(ChatColor.translateAlternateColorCodes('&', adminOnlyPrefix + getConfig().getString("Sent to all admins message")));
 						}
 						return true;
@@ -160,31 +158,84 @@ public class Main extends JavaPlugin {
 		return false;
 	}
 
-	// Maintenance was started.
+	// Start the listener for the player join event.
 	private void startEvent() {
-		// Check if maintenance has already been started.
-		if (started == false) {
 			PluginManager pm = getServer().getPluginManager();
 			Listener listener = new Listener(this);
 			pm.registerEvents(listener, this);
-			started = true;
-		}
 	}
-
-	private void adminBroadcastStart() {
+	
+	private void startMaintenance() {
+		startEvent();
+		
+		started = true;
+		
+		// Save that maintenance to the server has started to the config file.
+		getConfig().set("Maintenance", true);
+		saveConfig();
+		
+		// Broadcast that maintenance has started to all the players.
 		for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-			if (player.isOp()) {
+			if (player.hasPermission("hjw.maintenanceannouncer.see")) {
+				player.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + getConfig().getString("Maintenance has started")));
+			}
+		}
+		
+		getLogger().info("A maintenance started announcement to the server was made!");
+
+	}
+	
+	private void endMaintenance() {
+		started = false;
+				
+		// Save that maintenance to the server has ended to the config file.
+		getConfig().set("Maintenance", false);
+		saveConfig();
+		
+		// Broadcast that maintenance has ended to all the players.
+		for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+			if (player.hasPermission("hjw.maintenanceannouncer.see")) {
+				player.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + getConfig().getString("Maintenance has ended")));
+			}
+		}
+		
+		getLogger().info("A maintenance ended announcement to the server was made!");
+		
+	}
+	
+	private void startAdminMaintenance() {
+		adminOnlyStarted = true;
+		
+		// Save that admin only maintenance to the server has started to the config file.
+		getConfig().set("adminOnlyMaintenance", true);
+		saveConfig();
+		
+		for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+			if (player.hasPermission("hjw.maintenanceannouncer.adminsee")) {
 				player.sendMessage(ChatColor.translateAlternateColorCodes('&', adminOnlyPrefix + getConfig().getString("Maintenance has started")));
 			}
 		}
-	}
+		
+		getLogger().info("An admin only maintenance started announcement to the server was made!");
 
-	private void adminBroadcastStop() {
+	}
+	
+	
+	private void stopAdminMaintenance() {
+		adminOnlyStarted = false;
+				
+		// Save that maintenance to the server has ended to the config file.
+		getConfig().set("adminOnlyMaintenance", false);
+		saveConfig();
+		
+		// Broadcast that maintenance has ended to all the players.
 		for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-			if (player.isOp()) {
+			if (player.hasPermission("hjw.maintenanceannouncer.adminsee")) {
 				player.sendMessage(ChatColor.translateAlternateColorCodes('&', adminOnlyPrefix + getConfig().getString("Maintenance has ended")));
 			}
 		}
+		
+		getLogger().info("An admin only maintenance ended announcement to the server was made!");
 	}
 
 	private void createConfig() {

@@ -1,6 +1,6 @@
 name: MaintenanceAnnouncer
 author: Hayden Watson
-version: 5.1
+version: 6.0
 website: https://haydenwatson.co/maintenance-announcer
 prefix: Maintenance Announcer
 main: hjw.maintenanceannouncer.Main
@@ -47,7 +47,7 @@ permissions:
      hjw.maintenanceannouncer.reload: true
   hjw.maintenanceannouncer.see:
      description: Allows you to see there is server maintenance going on.
-     default: op
+     default: true
   hjw.maintenanceannouncer.start:
      description: Allows broadcasting that maintenance has started.
      default: op
