@@ -14,6 +14,7 @@ public class Main extends JavaPlugin {
 
 	private boolean started = false; // Var for if the maintenance to the server is active.
 	private String prefix = "[Maintenance Announcer]";
+	private String adminOnlyPrefix = "[Maintenance Announcer (ADMIN ONLY)]";
 
 	// Plugin has been enabled.
 	@Override
@@ -22,12 +23,14 @@ public class Main extends JavaPlugin {
 		createConfig();
 		
 		
-		// Check if the "Maintenance" string in the config says "true".
+		// Check if the "Maintenance" boolean in the config says "true".
 		if (getConfig().getBoolean("Maintenance") == true) {
 			startEvent();
 		}
 		
-		prefix = getConfig().getString("Prefix");
+		// Load customized prefixes from the config file.
+		prefix = getConfig().getString("Prefix"); // Set regular prefix with prefix defined in the config file.
+		adminOnlyPrefix = getConfig().getString("Admin only prefix");  // Set admin only prefix with prefix defined in the config file.
 	}
 
 	// Plugin has been disabled.
@@ -40,23 +43,34 @@ public class Main extends JavaPlugin {
 		// Statements for the maintenance commands.
 		if (cmd.getName().equalsIgnoreCase("maintenance")) {
 			reloadConfig();
-			// Switch for the arugment length.
+			
+			// Switch for the argument length.
 			switch (args.length) {
-			case 0:
-				if (getConfig().getString("adminOnlyMaintenance") == "true") {
-					if(sender.hasPermission("hjw.maintenanceannouncer.adminsee")) {
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("Admin only prefix") + getConfig().getString("Maintenance ongoing message")));
+			case 0: // User just used "/maintenance"
+				
+				// Check if user can see if admin only maintenance has started.
+				if(sender.hasPermission("hjw.maintenanceannouncer.adminsee")) {
+				if (getConfig().getBoolean("adminOnlyMaintenance") == true) {
+					// Tell commandSender that admin only maintenance to the server is going.
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', adminOnlyPrefix + getConfig().getString("Maintenance ongoing message")));
 					}
 				}
+				
+				// Check if user can see if maintenance has started.
 				if(sender.hasPermission("hjw.maintenanceannouncer.see")) {
-					if (getConfig().getString("Maintenance") == "true") {
+					
+					if (getConfig().getBoolean("Maintenance") == true) {
+						 // Tell commandSender that maintenance to the server is ongoing.
 						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + getConfig().getString("Maintenance ongoing message")));
 					} else {
+						// Tell commandSender that maintenance to the server is not ongoing.
 						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + getConfig().getString("Maintenance not ongoing message")));
 					}
 				}
+				
 				return true;
-			case 1: // User just used one arguement in their command.
+			case 1: // User just used one argument in their command.
+				
 				// Check for "start" or "begin" being the first argument.
 				if (args[0].equalsIgnoreCase("start") || (args[0].equalsIgnoreCase("begin"))) {
 					if(sender.hasPermission("hjw.maintenanceannouncer.start")) {
@@ -79,11 +93,12 @@ public class Main extends JavaPlugin {
 					}
 					return true;
 				}
+				
 				// Check for "admin" being the first argument.
 				if (args[0].equalsIgnoreCase("admin")) {
 					if(sender.hasPermission("hjw.maintenanceannouncer.adminsee")) {
 						if(sender.hasPermission("hjw.maintenanceannouncer.adminsee")) {
-							if (getConfig().getString("adminOnlyMaintenance") == "true") {
+							if (getConfig().getBoolean("adminOnlyMaintenance") == true) {
 								sender.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("Admin only prefix") + getConfig().getString("Maintenance ongoing message")));
 							} else {
 								sender.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("Admin only prefix") + getConfig().getString("Maintenance not ongoing message")));
@@ -97,7 +112,11 @@ public class Main extends JavaPlugin {
 					if(sender.hasPermission("hjw.maintenanceannouncer.reload")) {
 						if (getConfig().getBoolean("Allow reloads to Maintenance Announcer") == true) {
 							reloadConfig();
+							
+							// Load customized prefixes from the config file.
 							prefix = getConfig().getString("Prefix");
+							adminOnlyPrefix = getConfig().getString("Admin only prefix");
+							
 							sender.sendMessage(ChatColor.GREEN + "Maintenance Announcer successfully reloaded!");
 						} else {
 							sender.sendMessage(ChatColor.RED + "Reloading of Maintenance Announcer was disabled in the config file!");
@@ -106,8 +125,8 @@ public class Main extends JavaPlugin {
 					return true;
 				}
 				// Invalid Argument
-				sender.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("Admin only prefix") + getConfig().getString("Invalid argument message")));
-			case 2: // User used 2 arguements in their command.
+				sender.sendMessage(ChatColor.translateAlternateColorCodes('&', adminOnlyPrefix + getConfig().getString("Invalid argument message")));
+			case 2: // User used 2 arguments in their command.
 				// Check for "admin" being the first argument.
 				if (args[0].equalsIgnoreCase("admin")) {
 					if (args[1].equalsIgnoreCase("start") || (args[1].equalsIgnoreCase("begin"))) {
@@ -116,7 +135,7 @@ public class Main extends JavaPlugin {
 							getConfig().set("adminOnlyMaintenance", true);
 							saveConfig();
 							reloadConfig();
-							sender.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("Admin only prefix") + getConfig().getString("Sent to all admins message")));
+							sender.sendMessage(ChatColor.translateAlternateColorCodes('&', adminOnlyPrefix + getConfig().getString("Sent to all admins message")));
 						}
 						return true;
 					}
@@ -127,14 +146,14 @@ public class Main extends JavaPlugin {
 							getConfig().set("adminOnlyMaintenance", false);
 							saveConfig();
 							reloadConfig();
-							sender.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("Admin only prefix") + getConfig().getString("Sent to all admins message")));
+							sender.sendMessage(ChatColor.translateAlternateColorCodes('&', adminOnlyPrefix + getConfig().getString("Sent to all admins message")));
 						}
 						return true;
 					}
-					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("Admin only prefix") + getConfig().getString("Invalid argument message")));
+					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', adminOnlyPrefix + getConfig().getString("Invalid argument message")));
 				}
 				return true;
-			default: sender.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("Admin only prefix") + getConfig().getString("Two arguments are needed message")));
+			default: sender.sendMessage(ChatColor.translateAlternateColorCodes('&', adminOnlyPrefix + getConfig().getString("Two arguments are needed message")));
 
 			}
 		}
@@ -155,7 +174,7 @@ public class Main extends JavaPlugin {
 	private void adminBroadcastStart() {
 		for (Player player : Bukkit.getServer().getOnlinePlayers()) {
 			if (player.isOp()) {
-				player.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("Admin only prefix") + getConfig().getString("Maintenance has started")));
+				player.sendMessage(ChatColor.translateAlternateColorCodes('&', adminOnlyPrefix + getConfig().getString("Maintenance has started")));
 			}
 		}
 	}
@@ -163,7 +182,7 @@ public class Main extends JavaPlugin {
 	private void adminBroadcastStop() {
 		for (Player player : Bukkit.getServer().getOnlinePlayers()) {
 			if (player.isOp()) {
-				player.sendMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("Admin only prefix") + getConfig().getString("Maintenance has ended")));
+				player.sendMessage(ChatColor.translateAlternateColorCodes('&', adminOnlyPrefix + getConfig().getString("Maintenance has ended")));
 			}
 		}
 	}
