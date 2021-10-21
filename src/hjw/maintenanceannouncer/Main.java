@@ -45,6 +45,10 @@ public class Main extends JavaPlugin {
 	// Plugin has been disabled.
 	@Override
 	public void onDisable() { 
+		if (HandlerList.getHandlerLists() != null) {
+			HandlerList.unregisterAll(this); // Unregister the event for telling all newly joining players that maintenance was ongoing.
+		}
+		
 		getLogger().info("Maintenance Announcer is disabled."); // Log that Maintenance Announcer has been disabled.
 	}
 
@@ -119,7 +123,10 @@ public class Main extends JavaPlugin {
 							adminOnlyPrefix = getConfig().getString("Admin only prefix");
 							
 							HandlerList.unregisterAll(this); // Unregister the event for telling all newly joining players that maintenance was ongoing.
-							startEvent();
+							
+							if (getConfig().getBoolean("Tell players about server maintenance on join") == true) {
+								startEvent();
+							}
 							
 							sender.sendMessage(ChatColor.GREEN + "Maintenance Announcer successfully reloaded!");
 						} else {
@@ -165,9 +172,7 @@ public class Main extends JavaPlugin {
 			pm.registerEvents(listener, this);
 	}
 	
-	private void startMaintenance() {
-		startEvent();
-		
+	private void startMaintenance() {		
 		started = true;
 		
 		// Save that maintenance to the server has started to the config file.
