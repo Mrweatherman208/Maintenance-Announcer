@@ -90,6 +90,7 @@ public class Main extends JavaPlugin {
 					}
 					return true;
 				}
+				
 				// Check for "stop" or "end" being the first argument.
 				if (args[0].equalsIgnoreCase("stop") || (args[0].equalsIgnoreCase("end"))) {
 					if(sender.hasPermission("hjw.maintenanceannouncer.end")) {
@@ -111,6 +112,7 @@ public class Main extends JavaPlugin {
 					}
 					return true;
 				}
+				
 				// Reload Plugin
 				if (args[0].equalsIgnoreCase("reload")) {
 					if(sender.hasPermission("hjw.maintenanceannouncer.reload")) {
@@ -134,8 +136,12 @@ public class Main extends JavaPlugin {
 					}
 					return true;
 				}
+				
 				// Invalid Argument
-				sender.sendMessage(ChatColor.translateAlternateColorCodes('&', adminOnlyPrefix + getConfig().getString("Invalid argument message")));
+				if (sender.hasPermission("hjw.maintenanceannouncer.see")) {
+				sender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + getConfig().getString("Invalid argument message")));
+				}
+				
 			case 2: // User used 2 arguments in their command.
 				
 				// Check for "admin" being the first argument.
@@ -147,6 +153,7 @@ public class Main extends JavaPlugin {
 						}
 						return true;
 					}
+					
 					// Check for "stop" or "end" being the second argument.
 					if (args[1].equalsIgnoreCase("stop") || (args[1].equalsIgnoreCase("end"))) {
 						if(sender.hasPermission("hjw.maintenanceannouncer.adminend")) {
@@ -157,15 +164,17 @@ public class Main extends JavaPlugin {
 					}
 					
 					// Give user message that their argument was wrong.
-					if (sender.hasPermission("hjw.maintenanceannouncer.see")) {
-					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + getConfig().getString("Invalid argument message")));
+					if (sender.hasPermission("hjw.maintenanceannouncer.adminsee")) {
+					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', adminOnlyPrefix + getConfig().getString("Invalid argument message")));
 					}
 				}
+				
 				return true;
+				
 			default: 
 				// Runs if the user puts a bunch of different arguments.
 				if (sender.hasPermission("hjw.maintenanceannouncer.see")) {
-					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + getConfig().getString("Two arguments are needed message"))); 
+					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + getConfig().getString("Too many arguments message"))); 
 				}
 			}
 		}

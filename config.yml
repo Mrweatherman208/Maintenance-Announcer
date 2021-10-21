@@ -21,7 +21,7 @@ Maintenance not ongoing message: '&f The server is not currently undergoing main
 Prefix: '&c[Maintenance Announcer]'
 Admin only prefix: '&c[Maintenance Announcer (ADMIN ONLY)]'
 Sent to all admins message: '&a Sent to ALL admins!'
-Two arguments are needed message: '&a 2 arguments are needed!'
+Too many arguments message: '&a Too many arguments were entered!'
 
 # Made with love in Tennessee.
 # Copyright 2016 - 2021 Hayden Watson.
