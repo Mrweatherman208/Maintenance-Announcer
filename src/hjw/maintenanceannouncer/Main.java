@@ -61,23 +61,22 @@ public class Main extends JavaPlugin {
 			switch (args.length) {
 			case 0: // User just used "/maintenance"
 				
-				// Check if user can see if admin only maintenance has started.
-				if(sender.hasPermission("hjw.maintenanceannouncer.adminsee")) {
-				if (getConfig().getBoolean("adminOnlyMaintenance") == true) {
-					// Tell commandSender that admin only maintenance to the server is going.
-						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', adminOnlyPrefix + getConfig().getString("Maintenance ongoing message")));
-					}
-				}
-				
 				// Check if user can see if maintenance has started.
 				if(sender.hasPermission("hjw.maintenanceannouncer.see")) {
-					
 					if (getConfig().getBoolean("Maintenance") == true) {
 						 // Tell commandSender that maintenance to the server is ongoing.
 						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + getConfig().getString("Maintenance ongoing message")));
 					} else {
 						// Tell commandSender that maintenance to the server is not ongoing.
 						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + getConfig().getString("Maintenance not ongoing message")));
+					}
+				}
+				
+				// Check if user can see if admin only maintenance has started.
+				if(sender.hasPermission("hjw.maintenanceannouncer.adminsee")) {
+				if (getConfig().getBoolean("adminOnlyMaintenance") == true) {
+					// Tell commandSender that admin only maintenance to the server is going.
+						sender.sendMessage(ChatColor.translateAlternateColorCodes('&', adminOnlyPrefix + getConfig().getString("Maintenance ongoing message")));
 					}
 				}
 				
@@ -138,6 +137,7 @@ public class Main extends JavaPlugin {
 				// Invalid Argument
 				sender.sendMessage(ChatColor.translateAlternateColorCodes('&', adminOnlyPrefix + getConfig().getString("Invalid argument message")));
 			case 2: // User used 2 arguments in their command.
+				
 				// Check for "admin" being the first argument.
 				if (args[0].equalsIgnoreCase("admin")) {
 					if (args[1].equalsIgnoreCase("start") || (args[1].equalsIgnoreCase("begin"))) {
@@ -155,11 +155,18 @@ public class Main extends JavaPlugin {
 						}
 						return true;
 					}
-					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', adminOnlyPrefix + getConfig().getString("Invalid argument message")));
+					
+					// Give user message that their argument was wrong.
+					if (sender.hasPermission("hjw.maintenanceannouncer.see")) {
+					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + getConfig().getString("Invalid argument message")));
+					}
 				}
 				return true;
-			default: sender.sendMessage(ChatColor.translateAlternateColorCodes('&', adminOnlyPrefix + getConfig().getString("Two arguments are needed message")));
-
+			default: 
+				// Runs if the user puts a bunch of different arguments.
+				if (sender.hasPermission("hjw.maintenanceannouncer.see")) {
+					sender.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + getConfig().getString("Two arguments are needed message"))); 
+				}
 			}
 		}
 		return false;
