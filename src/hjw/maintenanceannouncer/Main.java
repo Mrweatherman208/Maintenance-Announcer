@@ -12,8 +12,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
 
-	public boolean started = false; // Var for if the maintenance to the server is active.
-	public boolean adminOnlyStarted = false; // Var for if the admin only maintenance to the server is active.
+	public boolean started = false; // Bool for if the maintenance to the server is active.
+	public boolean adminOnlyStarted = false; // Bool for if the admin only maintenance to the server is active.
 	
 	private String prefix = "[Maintenance Announcer]";
 	private String adminOnlyPrefix = "[Maintenance Announcer (ADMIN ONLY)]";
@@ -33,8 +33,8 @@ public class Main extends JavaPlugin {
 			adminOnlyStarted = true;
 		}
 		
-		if (getConfig().getBoolean("Tell players about server maintenance on join") == true) {
-			startEvent();
+		if ((getConfig().getBoolean("Tell players about server maintenance on join") == true) || (getConfig().getBoolean("Tell admins about server maintenance on join") == true)) { 
+			startEvent(); // Start the listener for telling player or admins that the server is under maintenance.
 		}
 		
 		// Load customized prefixes from the config file.
@@ -192,8 +192,8 @@ public class Main extends JavaPlugin {
 		started = true;
 		
 		// Save that maintenance to the server has started to the config file.
-		getConfig().set("Maintenance", true);
-		saveConfig();
+		getConfig().set("Maintenance", true); // Set "Maintenance" Bool as true.
+		saveConfig(); // Saves changes to the config file.
 		
 		// Broadcast that maintenance has started to all the players.
 		for (Player player : Bukkit.getServer().getOnlinePlayers()) {
@@ -202,7 +202,7 @@ public class Main extends JavaPlugin {
 			}
 		}
 		
-		getLogger().info("A maintenance started announcement to the server was made!");
+		getLogger().info("A maintenance start announcement to the server was made!");
 
 	}
 	
@@ -220,7 +220,7 @@ public class Main extends JavaPlugin {
 			}
 		}
 		
-		getLogger().info("A maintenance ended announcement to the server was made!");
+		getLogger().info("A maintenance end announcement to the server was made!");
 		
 	}
 	
@@ -237,7 +237,7 @@ public class Main extends JavaPlugin {
 			}
 		}
 		
-		getLogger().info("An admin only maintenance started announcement to the server was made!");
+		getLogger().info("An *admin only* maintenance start announcement to the server was made!");
 
 	}
 	
@@ -256,7 +256,7 @@ public class Main extends JavaPlugin {
 			}
 		}
 		
-		getLogger().info("An admin only maintenance ended announcement to the server was made!");
+		getLogger().info("An *admin only* maintenance end announcement to the server was made!");
 	}
 
 	private void createConfig() {

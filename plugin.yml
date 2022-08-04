@@ -1,6 +1,6 @@
 name: MaintenanceAnnouncer
 author: Hayden Watson
-version: 6.0
+version: 6.0.1
 website: https://haydenwatson.co/maintenance-announcer
 prefix: Maintenance Announcer
 main: hjw.maintenanceannouncer.Main
@@ -9,7 +9,7 @@ database: false
 
 commands:
   maintenance:
-    description: Check if the server is undergoing maintenance.
+    description: Check if the server is under maintenance.
     permission: hjw.maintenanceannouncer.see
   maintenance start:
     description: Broadcast to players that maintenance has started.
@@ -23,11 +23,11 @@ commands:
     description: Check if the server is undergoing maintenance (admin only).
     permission: hjw.maintenanceannouncer.adminsee
   maintenance admin start:
-    description: Broadcast to only admins that maintenance has started.
+    description: Broadcast to admins only that maintenance has started.
     permission: hjw.maintenanceannouncer.adminstart
     aliases: [admin begin]
   maintenance admin end:
-    description: Broadcast to only admins that maintenance has ended.
+    description: Broadcast to admins only that maintenance has ended.
     permission: hjw.maintenanceannouncer.adminend
     aliases: [admin stop]
   maintenance reload:
@@ -46,7 +46,7 @@ permissions:
      hjw.maintenanceannouncer.adminend: true
      hjw.maintenanceannouncer.reload: true
   hjw.maintenanceannouncer.see:
-     description: Allows you to see there is server maintenance going on.
+     description: Allows you to see if server maintenance is going on.
      default: true
   hjw.maintenanceannouncer.start:
      description: Allows broadcasting that maintenance has started.
@@ -55,13 +55,13 @@ permissions:
      description: Allows broadcasting that maintenance has ended.
      default: op
   hjw.maintenanceannouncer.adminsee:
-     description: Allows you to see there is admin only server maintenance going on.
+     description: Allows you to see if admin only server maintenance is going on.
      default: op
   hjw.maintenanceannouncer.adminstart:
-     description: Allows broadcasting that maintenance has started to only admins.
+     description: Allows broadcasting that maintenance has started to admins only.
      default: op
   hjw.maintenanceannouncer.adminend:
-     description: Allows broadcasting that maintenance has ended to only admins.
+     description: Allows broadcasting that maintenance has ended to admins only.
      default: op
   hjw.maintenanceannouncer.reload:
      description: Reloads the plugin.

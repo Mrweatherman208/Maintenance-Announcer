@@ -10,19 +10,22 @@ Allow reloads to Maintenance Announcer: true
 # Tell players about server maintenance when they join the server. (default: true) 
 Tell players about server maintenance on join: true
 
+# Tell admins about server maintenance when they join the server. (default: true) 
+Tell admins about server maintenance on join: true
+
 
 # ----Message Customization------------------------------------------------------------------
 # Here's where you can customize every message.
 Maintenance has started: '&f Maintenance to the server has started. Please excuse any lag.'
 Maintenance has ended: '&f Maintenance to the server has ended. Thanks for your patience.'
 Invalid argument message: '&a Invalid Argument! Args: start, begin, stop, end, admin start, admin begin, admin stop, admin end, reload.'
-Maintenance ongoing message: '&f The server is currently undergoing maintenance. Please excuse any lag.'
-Maintenance not ongoing message: '&f The server is not currently undergoing maintenance.'
+Maintenance ongoing message: '&f The server is currently under maintenance. Please excuse any lag.'
+Maintenance not ongoing message: '&f The server is not currently under any maintenance.'
 Prefix: '&c[Maintenance Announcer]'
 Admin only prefix: '&c[Maintenance Announcer (ADMIN ONLY)]'
 Sent to all admins message: '&a Sent to ALL admins!'
 Too many arguments message: '&a Too many arguments were entered!'
 
 # Made with love in Tennessee.
-# Copyright 2016 - 2021 Hayden Watson.
+# Copyright 2016 - 2022 Hayden Watson.
 # Maintenance Announcer is available under the MIT license.
